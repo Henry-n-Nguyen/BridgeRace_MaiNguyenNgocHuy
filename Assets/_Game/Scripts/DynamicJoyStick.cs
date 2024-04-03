@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using HuySpace;
 
 public class DynamicJoyStick : MonoBehaviour
 {
+    public static DynamicJoyStick instance;
+
     [SerializeField] private GameObject joyStickHolder;
     [SerializeField] private Image splittedjoyStick;
     [SerializeField] private Image joyStick;
 
-    private bool isPressed;
+    [SerializeField] private bool isPressed;
+    public bool IsPressed => isPressed;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         OnInit();

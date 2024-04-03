@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovingByJoyStick : MonoBehaviour
+public class MovingByJoyStick : Character
 {
     enum Direct
     {
@@ -19,8 +19,6 @@ public class MovingByJoyStick : MonoBehaviour
         None = -1
     }
 
-
-    [SerializeField] private Character playerScript;
     [SerializeField] private Transform playerTransform;
 
     [SerializeField] private PlayerInput playerInput;
@@ -28,31 +26,22 @@ public class MovingByJoyStick : MonoBehaviour
     [SerializeField] private InputAction moveAction;
 
     [SerializeField] private float moveSpeed = 5f;
-    private void Start()
+
+    public override void OnInit()
     {
+        base.OnInit();
+
         moveAction = playerInput.actions.FindAction("Moving");
     }
 
-    private void Update()
+    public override void Moving()
     {
-        Moving();
-    }
+        base.Moving();
 
-    private void Moving()
-    {
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         Direct direction = CheckDirection(inputVector);
 
-        switch (direction)
-        {
-            case Direct.None: 
-                playerScript.ChangeState(new IdleState());
-                break;
-            default: 
-                Rotate(direction);
-                playerScript.ChangeState(new PatrolState());
-                break;
-        }
+        Rotate(direction);
 
         playerTransform.position += (Vector3.right * inputVector.x + Vector3.forward * inputVector.y) * Time.deltaTime * moveSpeed;
     }
