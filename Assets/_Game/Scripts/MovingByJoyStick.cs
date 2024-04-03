@@ -35,13 +35,7 @@ public class MovingByJoyStick : MonoBehaviour
 
     private void Update()
     {
-        if (moveAction.ReadValue<Vector2>() != Vector2.zero)
-        {
-            Moving();
-        } else
-        {
-            playerScript.ChangeState(new IdleState());
-        }
+        Moving();
     }
 
     private void Moving()
@@ -49,8 +43,16 @@ public class MovingByJoyStick : MonoBehaviour
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         Direct direction = CheckDirection(inputVector);
 
-        Rotate(direction);
-        playerScript.ChangeState(new PatrolState());
+        switch (direction)
+        {
+            case Direct.None: 
+                playerScript.ChangeState(new IdleState());
+                break;
+            default: 
+                Rotate(direction);
+                playerScript.ChangeState(new PatrolState());
+                break;
+        }
 
         playerTransform.position += (Vector3.right * inputVector.x + Vector3.forward * inputVector.y) * Time.deltaTime * moveSpeed;
     }
