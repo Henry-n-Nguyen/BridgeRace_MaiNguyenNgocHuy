@@ -6,13 +6,13 @@ using HuySpace;
 
 public static class SimplePool
 {
-    static Dictionary<ColorType, Pool> poolInstance = new Dictionary<ColorType, Pool>();
+    public static Dictionary<ColorType, Pool> poolInstance = new Dictionary<ColorType, Pool>();
 
-    public static void Preload(GameUnit prefab, int amount, Transform parent = null)
+    public static void Preload(GameUnit prefab, int amount, ColorType color, Transform parent = null)
     {
         if (prefab != null && !poolInstance.ContainsKey(prefab.colorType))
         {
-            poolInstance.Add(prefab.colorType, new Pool(prefab, amount, parent));
+            poolInstance.Add(prefab.colorType, new Pool(prefab, amount, color, parent));
         }
     }
 
@@ -37,20 +37,25 @@ public static class SimplePool
 
 public class Pool : MonoBehaviour
 {
-    Transform parent;
+    public Transform parent;
 
-    GameUnit prefab;
+    public GameUnit prefab;
+
+    public ColorType color;
 
     // List object in pool
-    Queue<GameUnit> inactives = new Queue<GameUnit>();
+    public Queue<GameUnit> inactives = new Queue<GameUnit>();
 
     // List object out pool
-    List<GameUnit> actives = new List<GameUnit>();
+    public List<GameUnit> actives = new List<GameUnit>();
 
-    public Pool(GameUnit prefab, int initialQty, Transform parent)
+    public Pool(GameUnit prefab, int initialQty, ColorType color, Transform parent)
     {
         this.parent = parent;
         this.prefab = prefab;
+
+        this.color = color;
+
         inactives = new Queue<GameUnit>(initialQty);
         actives = new List<GameUnit>();
     }

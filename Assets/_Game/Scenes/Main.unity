@@ -296,39 +296,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 135514080}
-  - component: {fileID: 135514079}
+  - component: {fileID: 135514081}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &135514079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135514078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84142b0183c3d924c90caa269920560b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolAmounts:
-  - parent: {fileID: 0}
-    prefab: {fileID: 0}
-    amount: 0
-  - parent: {fileID: 0}
-    prefab: {fileID: 0}
-    amount: 0
-  - parent: {fileID: 0}
-    prefab: {fileID: 0}
-    amount: 0
-  - parent: {fileID: 0}
-    prefab: {fileID: 0}
-    amount: 0
+  m_IsActive: 1
 --- !u!4 &135514080
 Transform:
   m_ObjectHideFlags: 0
@@ -344,6 +319,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &135514081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135514078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6503101e4da5c428d03af9f4911284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brickPrefab: {fileID: 8915961563501120378, guid: 411b4831f9ef54446af17ef0f301ff3c, type: 3}
+  poolHolder: {fileID: 135514080}
 --- !u!1 &152196218
 GameObject:
   m_ObjectHideFlags: 0

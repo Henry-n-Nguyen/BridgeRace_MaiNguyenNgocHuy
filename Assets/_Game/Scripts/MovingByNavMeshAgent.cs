@@ -15,7 +15,7 @@ public class MovingByNavMeshAgent : Character
 
     private void Awake()
     {
-        ChangeColor(ColorType.Red);
+        ChangeColor(ColorType.Red);  
     }
 
     public override void Moving()

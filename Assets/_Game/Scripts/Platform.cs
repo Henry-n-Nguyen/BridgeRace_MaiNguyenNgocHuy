@@ -1,3 +1,4 @@
+using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class Platform : MonoBehaviour
             {
                 Vector3 pos = Vector3.right * (i + 3) + Vector3.forward * (j + 3) + Vector3.up * 0.7f;
 
-                Instantiate(brickPrefab, pos, brickPrefab.transform.rotation, holder);
+                BrickPool.instance.SpawnPooledBrick(pos);
             }
         }
     }
