@@ -1,3 +1,4 @@
+using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -19,13 +20,16 @@ public class MovingByJoyStick : Character
         None = -1
     }
 
-    [SerializeField] private Transform playerTransform;
-
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private InputAction moveAction;
 
     [SerializeField] private float moveSpeed = 5f;
+
+    private void Awake()
+    {
+        ChangeColor(ColorType.Blue);
+    }
 
     public override void OnInit()
     {
@@ -44,6 +48,15 @@ public class MovingByJoyStick : Character
         Rotate(direction);
 
         playerTransform.position += (Vector3.right * inputVector.x + Vector3.forward * inputVector.y) * Time.deltaTime * moveSpeed;
+
+        if (!DynamicJoyStick.instance.IsPressed) ChangeState(new IdleState());
+    }
+
+    public override void StopMoving()
+    {
+        base.StopMoving();
+
+        if (DynamicJoyStick.instance.IsPressed) ChangeState(new PatrolState());
     }
 
     private void Rotate(Direct dir)

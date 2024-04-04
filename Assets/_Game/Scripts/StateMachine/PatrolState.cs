@@ -12,7 +12,6 @@ public class PatrolState : IState<Character>
 
     public void OnExecute(Character t)
     {
-        if (!DynamicJoyStick.instance.IsPressed) t.ChangeState(new IdleState());
         t.Moving();
     }
 

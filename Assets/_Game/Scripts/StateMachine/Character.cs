@@ -11,6 +11,7 @@ public abstract class Character : MonoBehaviour
 
     const float BRICK_HEIGHT = 0.25f;
 
+    [SerializeField] protected Transform playerTransform;
     [SerializeField] private Animator anim;
     [SerializeField] private Transform playerBrickHolder;
 
@@ -43,7 +44,6 @@ public abstract class Character : MonoBehaviour
     public virtual void OnInit()
     {
         ChangeState(new IdleState());
-        ChangeColor(ColorType.Red);
     }
 
     public void ChangeState(IState<Character> state)
@@ -81,10 +81,13 @@ public abstract class Character : MonoBehaviour
         ChangeAnim(TRIGGER_IDLE);
     }
 
-    public void AddBrick()
+    public virtual void AddBrick()
     {
         Vector3 pos = playerBrickHolder.position + Vector3.up * BRICK_HEIGHT * bricks.Count;
-        GameObject createdObj = Instantiate(brickPrefab, pos, brickPrefab.transform.rotation, playerBrickHolder);
+
+        Vector3 direction = transform.rotation.eulerAngles + Vector3.up * 90f;
+
+        GameObject createdObj = Instantiate(brickPrefab, pos, Quaternion.Euler(direction), playerBrickHolder);
 
         bricks.Push(createdObj);
     }
