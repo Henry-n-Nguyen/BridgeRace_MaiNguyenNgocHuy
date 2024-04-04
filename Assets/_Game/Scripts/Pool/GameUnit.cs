@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HuySpace;
 
 public class GameUnit : MonoBehaviour
 {
     private Transform tf;
+
     public Transform TF
     {
         get
@@ -14,9 +16,20 @@ public class GameUnit : MonoBehaviour
             {
                 tf = transform;
             }
+
             return tf;
         }
     }
 
-    public PoolType poolType;
+    public ColorType colorType;
+
+    public void OnDespawn(float delay)
+    {
+        Invoke(nameof(OnDespawn), delay);
+    }
+
+    private void OnDespawn()
+    {
+        SimplePool.Despawn(this);
+    }
 }

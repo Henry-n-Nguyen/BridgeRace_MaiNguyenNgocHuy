@@ -13,9 +13,6 @@ public class MovingByNavMeshAgent : Character
 
     [SerializeField] private Vector3 desPoint;
 
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private Rigidbody rb;
-
     private void Awake()
     {
         ChangeColor(ColorType.Red);
@@ -70,10 +67,5 @@ public class MovingByNavMeshAgent : Character
         }
 
         if (detect == 0) isMoving = false;
-    }
-
-    private bool OnGround()
-    {
-        return Physics.Raycast(playerTransform.position, Vector3.down, 10f, groundLayer);
     }
 }
