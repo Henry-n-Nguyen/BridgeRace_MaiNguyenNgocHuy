@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using HuySpace;
+using Unity.VisualScripting;
 
 public class PoolController : MonoBehaviour
 {
-    [SerializeField] PoolAmount[] poolAmounts;
+    [SerializeField] private PoolAmount[] poolAmounts;
 
     void Awake()
     {
         for (int i = 0; i < poolAmounts.Length; i++)
         {
-            SimplePool.Preload(poolAmounts[i].prefab, poolAmounts[i].amount, poolAmounts[i].color, poolAmounts[i].parent);
+            SimplePool.Preload(poolAmounts[i].color, poolAmounts[i].prefab, poolAmounts[i].amount, poolAmounts[i].parent);
         }
+    }
 
-        Dictionary<ColorType, Pool> simplePool = SimplePool.poolInstance;
+    public List<int> GetAmountInPool() 
+    {
+        List<int> tmpArray = new List<int>();
 
-        for (int i = 1; i <= simplePool.Count; i++)
-        {
-            Pool pool = SimplePool.poolInstance[(ColorType) i];
-            pool.Preload(pool.prefab, pool.inactives.Count, pool.parent);
-        }
-    }    
+        for (int i = 0; i < poolAmounts.Length; i++) tmpArray.Add(poolAmounts[i].amount);
+
+        return tmpArray;
+    }
+
+    public int GetAmountOfPool()
+    {
+        return poolAmounts.Length;
+    }
 }
 
 [System.Serializable]

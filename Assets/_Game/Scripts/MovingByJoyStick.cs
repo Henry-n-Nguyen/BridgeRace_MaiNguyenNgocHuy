@@ -24,7 +24,7 @@ public class MovingByJoyStick : Character
 
     [SerializeField] private InputAction moveAction;
 
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 3.5f;
 
     private void Awake()
     {
@@ -49,14 +49,15 @@ public class MovingByJoyStick : Character
 
         playerTransform.position += (Vector3.right * inputVector.x + Vector3.forward * inputVector.y) * Time.deltaTime * moveSpeed;
 
-        if (!DynamicJoyStick.instance.IsPressed) ChangeState(new IdleState());
+        if (Vector2.Distance(inputVector,Vector2.zero) < 0.1f) ChangeState(new IdleState());
     }
 
     public override void StopMoving()
     {
         base.StopMoving();
 
-        if (DynamicJoyStick.instance.IsPressed) ChangeState(new PatrolState());
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
+        if (Vector2.Distance(inputVector, Vector2.zero) > 0.1f) ChangeState(new PatrolState());
     }
 
     private void Rotate(Direct dir)

@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using HuySpace;
 
-public class Brick : MonoBehaviour
+public class Brick : GameUnit
 {
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
     [SerializeField] Collider collide;
-    public ColorType color;
 
     private void OnTriggerEnter(Collider other)
     {
         Character character = other.GetComponent<Character>();
-        if (character.color == color)
+        if (character.color == colorType)
         {
             character.AddBrick();
             gameObject.SetActive(false);
         }
     }
 
-    public void ChangeColor(ColorType colorType)
+    public void ChangeColor(ColorType color)
     {
-        color = colorType;
-        meshRenderer.material = colorData.GetMat(colorType);
+        colorType = color;
+        meshRenderer.material = colorData.GetMat(color);
     }
 }

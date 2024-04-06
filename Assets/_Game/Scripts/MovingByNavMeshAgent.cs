@@ -13,16 +13,15 @@ public class MovingByNavMeshAgent : Character
 
     [SerializeField] private Vector3 desPoint;
 
-    private void Awake()
-    {
-        ChangeColor(ColorType.Red);  
-    }
-
     public override void Moving()
     {
-        if (!isMoving) ChangeState(new IdleState());
-
         base.Moving();
+
+        if (!isMoving)
+        {
+            isDetected = true;
+            ChangeState(new IdleState());
+        }
 
         if (!isDetected)
         {
@@ -37,7 +36,11 @@ public class MovingByNavMeshAgent : Character
     {
         base.StopMoving();
 
-        if (isMoving) ChangeState(new PatrolState());
+        if (isMoving)
+        {
+            isDetected = false;
+            ChangeState(new PatrolState());
+        }
     }
 
     public override void AddBrick()
@@ -55,10 +58,11 @@ public class MovingByNavMeshAgent : Character
 
         foreach (Collider collider in objectInRange)
         {
-            if (collider.gameObject.CompareTag("Brick"))
+            if (collider.gameObject.CompareTag(TAG_BRICK))
             {
-                if (collider.GetComponent<Brick>().color == color)
+                if (collider.GetComponent<GameUnit>().colorType == color)
                 {
+                    Debug.Log(collider.name);
                     desPoint = collider.transform.position;
                     detect++;
                     break;

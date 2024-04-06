@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Platform.instance.SpawnBrick(brickPrefab, 5, Map01);
+        Platform.instance.SpawnBrick(Map01.position);
     }
 
     // Update is called once per frame

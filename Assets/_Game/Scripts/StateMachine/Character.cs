@@ -6,8 +6,9 @@ using System.Drawing;
 
 public abstract class Character : MonoBehaviour
 {
-    const string TRIGGER_RUN = "run";
-    const string TRIGGER_IDLE = "idle";
+    protected const string TRIGGER_RUN = "run";
+    protected const string TRIGGER_IDLE = "idle";
+    protected const string TAG_BRICK = "Brick";
 
     const float BRICK_HEIGHT = 0.25f;
 
@@ -15,7 +16,7 @@ public abstract class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Transform playerBrickHolder;
 
-    [SerializeField] private GameObject brickPrefab;
+    [SerializeField] private Brick brickPrefab;
 
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
@@ -25,11 +26,12 @@ public abstract class Character : MonoBehaviour
 
     private string currentAnimName;
 
-    private Stack<GameObject> bricks = new Stack<GameObject>();
+    private Stack<GameUnit> bricks = new Stack<GameUnit>();
 
     private void Start()
     {
         OnInit();
+        ChangeColor(color);
     }
 
     // Update is called once per frame
@@ -87,7 +89,9 @@ public abstract class Character : MonoBehaviour
 
         Vector3 direction = transform.rotation.eulerAngles + Vector3.up * 90f;
 
-        GameObject createdObj = Instantiate(brickPrefab, pos, Quaternion.Euler(direction), playerBrickHolder);
+        Brick createdObj = Instantiate(brickPrefab, pos, Quaternion.Euler(direction), playerBrickHolder);
+
+        createdObj.ChangeColor(color);
 
         bricks.Push(createdObj);
     }

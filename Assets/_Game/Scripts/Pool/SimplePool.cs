@@ -8,11 +8,12 @@ public static class SimplePool
 {
     public static Dictionary<ColorType, Pool> poolInstance = new Dictionary<ColorType, Pool>();
 
-    public static void Preload(GameUnit prefab, int amount, ColorType color, Transform parent = null)
+    public static void Preload(ColorType color, GameUnit prefab, int amount, Transform parent = null)
     {
-        if (prefab != null && !poolInstance.ContainsKey(prefab.colorType))
+        if (prefab != null && !poolInstance.ContainsKey(color))
         {
-            poolInstance.Add(prefab.colorType, new Pool(prefab, amount, color, parent));
+            Pool pool = new Pool(prefab, amount, parent);
+            poolInstance.Add(color, pool);
         }
     }
 
@@ -49,12 +50,10 @@ public class Pool : MonoBehaviour
     // List object out pool
     public List<GameUnit> actives = new List<GameUnit>();
 
-    public Pool(GameUnit prefab, int initialQty, ColorType color, Transform parent)
+    public Pool(GameUnit prefab, int initialQty, Transform parent)
     {
         this.parent = parent;
         this.prefab = prefab;
-
-        this.color = color;
 
         inactives = new Queue<GameUnit>(initialQty);
         actives = new List<GameUnit>();
