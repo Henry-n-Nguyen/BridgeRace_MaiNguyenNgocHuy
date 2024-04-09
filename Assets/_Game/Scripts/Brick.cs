@@ -7,7 +7,6 @@ public class Brick : GameUnit
 {
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
-    [SerializeField] Collider collide;
 
     private void OnTriggerEnter(Collider other)
     {

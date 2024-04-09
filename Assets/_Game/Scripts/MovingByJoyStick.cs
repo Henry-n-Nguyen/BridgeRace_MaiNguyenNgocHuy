@@ -7,35 +7,22 @@ using UnityEngine.InputSystem;
 
 public class MovingByJoyStick : Character
 {
-    enum Direct
-    {
-        Forward,
-        ForwardRight,
-        Right,
-        BackRight,
-        Back,
-        BackLeft,
-        Left,
-        ForwardLeft,
-        None = -1
-    }
+    const string INPUT_ACTION_MOVING = "Moving";
 
     [SerializeField] private PlayerInput playerInput;
 
     [SerializeField] private InputAction moveAction;
-
-    [SerializeField] private float moveSpeed = 3.5f;
 
     private void Awake()
     {
         ChangeColor(ColorType.Blue);
     }
 
-    public override void OnInit()
+    protected override void OnInit()
     {
         base.OnInit();
 
-        moveAction = playerInput.actions.FindAction("Moving");
+        moveAction = playerInput.actions.FindAction(INPUT_ACTION_MOVING);
     }
 
     public override void Moving()
@@ -43,13 +30,14 @@ public class MovingByJoyStick : Character
         base.Moving();
 
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
+
         Direct direction = CheckDirection(inputVector);
 
         Rotate(direction);
 
         playerTransform.position += (Vector3.right * inputVector.x + Vector3.forward * inputVector.y) * Time.deltaTime * moveSpeed;
 
-        if (Vector2.Distance(inputVector,Vector2.zero) < 0.1f) ChangeState(new IdleState());
+        if (Vector2.Distance(inputVector, Vector2.zero) < 0.1f) ChangeState(new IdleState());
     }
 
     public override void StopMoving()

@@ -13,6 +13,13 @@ public class MovingByNavMeshAgent : Character
 
     [SerializeField] private Vector3 desPoint;
 
+    protected override void OnInit()
+    {
+        base.OnInit();
+
+        agent.speed = moveSpeed;
+    }
+
     public override void Moving()
     {
         base.Moving();
