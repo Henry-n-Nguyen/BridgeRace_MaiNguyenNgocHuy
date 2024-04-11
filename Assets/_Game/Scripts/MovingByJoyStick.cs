@@ -18,9 +18,11 @@ public class MovingByJoyStick : Character
         ChangeColor(ColorType.Blue);
     }
 
-    protected override void OnInit()
+    public override void OnInit()
     {
         base.OnInit();
+
+        Rotate(Direct.Forward);
 
         moveAction = playerInput.actions.FindAction(INPUT_ACTION_MOVING);
     }

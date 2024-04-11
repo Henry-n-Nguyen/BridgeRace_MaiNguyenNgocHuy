@@ -27,7 +27,7 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField] private Brick brickPrefab;
 
-    [SerializeField] public bool isMoving;
+    public bool isMoving;
 
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
@@ -67,7 +67,7 @@ public abstract class Character : MonoBehaviour
         return bricks.Count <= 0;
     }
 
-    protected virtual void OnInit()
+    public virtual void OnInit()
     {
         bricks.Clear();
 
@@ -142,6 +142,11 @@ public abstract class Character : MonoBehaviour
     public virtual void RemoveBrick()
     {
         Destroy(bricks.Pop().gameObject);
+    }
+
+    public virtual void ClearBrick()
+    {
+        bricks.Clear();
     }
 
     public void ChangeColor(ColorType colorType)

@@ -17,7 +17,7 @@ public class MovingByNavMeshAgent : Character
 
     private NavMeshPath path;
 
-    protected override void OnInit()
+    public override void OnInit()
     {
         base.OnInit();
 

@@ -19,7 +19,7 @@ public class Brick : GameUnit
             if (character.color == colorType)
             {
                 character.AddBrick();
-                Invoke(nameof(Respawn), 2f);
+                Invoke(nameof(Respawn), 3f);
 
                 Platform.instance.bricks.Remove(this);
 
