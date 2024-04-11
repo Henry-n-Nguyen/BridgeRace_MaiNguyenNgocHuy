@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    public static CameraFollow instance;
+
+    public Transform target;
     
     [SerializeField] private Vector3 offset;
-    private void Start()
+
+    private void Awake()
     {
-        offset = Vector3.back * 15f + Vector3.up * 15f;
+        instance = this;
     }
 
     // Update is called once per frame

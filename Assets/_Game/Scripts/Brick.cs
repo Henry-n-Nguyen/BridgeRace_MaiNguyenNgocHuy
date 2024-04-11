@@ -5,17 +5,36 @@ using HuySpace;
 
 public class Brick : GameUnit
 {
+    const string LAYER_PLAYER = "Player";
+
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
+    [SerializeField] Collider collide;
 
     private void OnTriggerEnter(Collider other)
     {
-        Character character = other.GetComponent<Character>();
-        if (character.color == colorType)
+        if (other.gameObject.layer == LayerMask.NameToLayer(LAYER_PLAYER))
         {
-            character.AddBrick();
-            gameObject.SetActive(false);
+            Character character = other.GetComponent<Character>();
+            if (character.color == colorType)
+            {
+                character.AddBrick();
+                Invoke(nameof(Respawn), 2f);
+
+                Platform.instance.bricks.Remove(this);
+
+                meshRenderer.enabled = false;
+                collide.enabled = false;
+            }
         }
+    }
+
+    private void Respawn()
+    {
+        Platform.instance.bricks.Add(this);
+
+        meshRenderer.enabled = true;
+        collide.enabled = true;
     }
 
     public void ChangeColor(ColorType color)

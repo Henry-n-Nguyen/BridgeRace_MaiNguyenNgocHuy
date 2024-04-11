@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : IState<Character>
+public class BuildState : IState<Character>
 {
     public void OnEnter(Character t)
     {
@@ -11,12 +11,11 @@ public class AttackState : IState<Character>
 
     public void OnExecute(Character t)
     {
-
+        t.BuildBridge();
     }
 
     public void OnExit(Character t)
     {
 
     }
-
 }

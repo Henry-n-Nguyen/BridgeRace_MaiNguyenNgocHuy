@@ -5,8 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Brick
-  - FxTemporaire
   - PlayerBrick
+  - Map01
+  - Map02
+  - Map03
   layers:
   - Default
   - TransparentFX
@@ -17,10 +19,10 @@ TagManager:
   - Player
   - Bridge
   - Step
-  - 
-  - 
-  - 
-  - 
+  - Brick
+  - Entrance
+  - PlayerBrick
+  - OneWayBlock
   - 
   - 
   - 

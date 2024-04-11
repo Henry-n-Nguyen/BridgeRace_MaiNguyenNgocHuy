@@ -771,11 +771,20 @@ MonoBehaviour:
   color: 0
   state: 0
   isGrounded: 0
-  maxSlopeAngle: 0
   agent: {fileID: 1304379366}
   isMoving: 0
   isDetected: 0
   desPoint: {x: 0, y: 0, z: 0}
+  entrancePoint: {x: 0, y: 0, z: 0}
+  brickLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  stepLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  entranceLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &6722475851531234345
 GameObject:
   m_ObjectHideFlags: 0

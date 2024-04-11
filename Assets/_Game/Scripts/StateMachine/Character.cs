@@ -9,6 +9,11 @@ public abstract class Character : MonoBehaviour
     protected const string TRIGGER_RUN = "run";
     protected const string TRIGGER_IDLE = "idle";
     protected const string TAG_BRICK = "Brick";
+    protected const string TAG_ENTRANCE = "Entrance";
+
+    protected const string TAG_MAP_01 = "Map01";
+    protected const string TAG_MAP_02 = "Map02";
+    protected const string TAG_MAP_03 = "Map03";
 
     const float BRICK_HEIGHT = 0.25f;
     const float PLAYER_HEIGHT = 2f;
@@ -22,22 +27,25 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField] private Brick brickPrefab;
 
+    [SerializeField] public bool isMoving;
+
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
 
     public ColorType color;
-    public MovementState state;
 
     public bool isGrounded;
 
-    protected float moveSpeed = 3.5f;
+    protected float moveSpeed = 5f;
+
+    public int currentMap = 1;
 
     // Private
     private IState<Character> currentState;
 
     private string currentAnimName;
 
-    private Stack<GameUnit> bricks = new Stack<GameUnit>();
+    protected Stack<GameUnit> bricks = new Stack<GameUnit>();
 
     private void Start()
     {
@@ -54,18 +62,6 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    private void StateHandler()
-    {
-        if (isGrounded)
-        {
-            state = MovementState.walking;
-        }
-        else
-        {
-            state = MovementState.air;
-        }
-    }
-
     public bool IsRanOutOfBrick()
     {
         return bricks.Count <= 0;
@@ -78,7 +74,7 @@ public abstract class Character : MonoBehaviour
         ChangeState(new IdleState());
     }
 
-    protected void ChangeState(IState<Character> state)
+    public void ChangeState(IState<Character> state)
     {
         if (currentState != null)
         {
@@ -113,12 +109,16 @@ public abstract class Character : MonoBehaviour
         ChangeAnim(TRIGGER_IDLE);
     }
 
+    public virtual void BuildBridge()
+    {
+        ChangeAnim(TRIGGER_RUN);
+    }
+
     public virtual bool OnDownStair()
     {
         if (Physics.Raycast(playerTransform.position, Vector3.down, out RaycastHit slopeHit, PLAYER_HEIGHT * 0.5f + 0.3f, bridgeLayer))
         {
             float angle = 90f - Vector3.Angle(playerTransform.forward, slopeHit.normal);
-            Debug.Log(angle);
 
             return angle >= 0f;
         }
@@ -144,7 +144,7 @@ public abstract class Character : MonoBehaviour
         Destroy(bricks.Pop().gameObject);
     }
 
-    protected void ChangeColor(ColorType colorType)
+    public void ChangeColor(ColorType colorType)
     {
         color = colorType;
         meshRenderer.material = colorData.GetMat(colorType);

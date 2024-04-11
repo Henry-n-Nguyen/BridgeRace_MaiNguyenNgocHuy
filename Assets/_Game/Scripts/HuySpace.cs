@@ -3,12 +3,6 @@ using UnityEngine;
 
 namespace HuySpace
 {
-    public enum MovementState
-    {
-        walking,
-        air
-    }
-
     public enum Direct
     {
         Forward,

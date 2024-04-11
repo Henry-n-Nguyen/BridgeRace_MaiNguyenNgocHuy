@@ -1,18 +1,24 @@
+using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Entrance : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Collider collide;
+    [SerializeField] NavMeshObstacle navMeshStacle;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        navMeshStacle.enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        Character character = other.GetComponent<Character>();
+
+        navMeshStacle.enabled = true;
+        character.currentMap++;
     }
 }

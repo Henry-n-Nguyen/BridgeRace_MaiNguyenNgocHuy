@@ -1,23 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using HuySpace;
 
 public class MovingByNavMeshAgent : Character
 {
     [SerializeField] private NavMeshAgent agent;
 
-    [SerializeField] private bool isMoving;
     [SerializeField] private bool isDetected;
 
     [SerializeField] private Vector3 desPoint;
+
+    [SerializeField] private Vector3 entrancePoint;
+
+    [SerializeField] private LayerMask brickLayer;
+    [SerializeField] private LayerMask stepLayer;
+    [SerializeField] private LayerMask entranceLayer;
+
+    private NavMeshPath path;
 
     protected override void OnInit()
     {
         base.OnInit();
 
         agent.speed = moveSpeed;
+        agent.updateRotation = true;
     }
 
     public override void Moving()
@@ -26,13 +31,19 @@ public class MovingByNavMeshAgent : Character
 
         if (!isMoving)
         {
-            isDetected = true;
+            isDetected = false;
             ChangeState(new IdleState());
+        }
+
+        if (bricks.Count >= 12)
+        {
+            isDetected = false;
+            ChangeState(new BuildState());
         }
 
         if (!isDetected)
         {
-            FindDestinationPoint();
+            FindBrick();
             isDetected = true;
         }
 
@@ -50,6 +61,31 @@ public class MovingByNavMeshAgent : Character
         }
     }
 
+    public override void BuildBridge()
+    {
+        base.BuildBridge();
+
+        if (!isMoving)
+        {
+            isDetected = false;
+            ChangeState(new IdleState());
+        }
+
+        if (IsRanOutOfBrick())
+        {
+            isDetected = false;
+            ChangeState(new PatrolState());
+        }
+
+        if (!isDetected)
+        {
+            FindNextMap();
+            isDetected = true;
+            agent.SetDestination(entrancePoint);
+        }
+
+    }
+
     public override void AddBrick()
     {
         base.AddBrick();
@@ -57,26 +93,56 @@ public class MovingByNavMeshAgent : Character
         isDetected = false;
     }
 
-    private void FindDestinationPoint()
+    private void FindBrick()
     {
-        int detect = 0;
+        bool detect = false;
 
-        Collider[] objectInRange = Physics.OverlapSphere(playerTransform.position, 50f);
-
-        foreach (Collider collider in objectInRange)
+        foreach (GameUnit unit in Platform.instance.bricks)
         {
-            if (collider.gameObject.CompareTag(TAG_BRICK))
+            if (unit.colorType == color)
             {
-                if (collider.GetComponent<GameUnit>().colorType == color)
-                {
-                    Debug.Log(collider.name);
-                    desPoint = collider.transform.position;
-                    detect++;
-                    break;
-                }
+                desPoint = unit.transform.position;
+                detect = true;
+                break;
             }
         }
 
-        if (detect == 0) isMoving = false;
+        if (!detect)
+        {
+            isDetected = false;
+        }
+    }
+
+    private void FindNextMap()
+    {
+        bool detect = false;
+
+        Collider[] objectInRange = Physics.OverlapSphere(playerTransform.position, 200f, entranceLayer);
+
+        foreach (Collider collider in objectInRange)
+        {
+            if (CheckTag(currentMap, collider))
+            {
+                entrancePoint = collider.transform.position + Vector3.forward * 2;
+                detect = true;
+                break;
+            }
+        }
+
+        if (!detect)
+        {
+            isDetected = false;
+        }
+    }
+
+    private bool CheckTag(int currentMapIndex, Collider collider) 
+    {
+        switch (currentMapIndex)
+        {
+            case 1: return collider.CompareTag(TAG_MAP_01);
+            case 2: return collider.CompareTag(TAG_MAP_02);
+            case 3: return collider.CompareTag(TAG_MAP_03);
+            default: return false;
+        }
     }
 }
