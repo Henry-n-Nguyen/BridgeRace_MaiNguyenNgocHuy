@@ -6,6 +6,6 @@ public class LoadingUI : UICanvas
 {
     private void OnEnable()
     {
-        Close(5f);
+        Close(3f);
     }
 }

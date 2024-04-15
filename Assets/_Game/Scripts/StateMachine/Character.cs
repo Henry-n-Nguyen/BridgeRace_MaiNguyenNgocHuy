@@ -140,7 +140,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual bool OnDownStair()
     {
-        if (Physics.Raycast(playerTransform.position, Vector3.down, out RaycastHit slopeHit, PLAYER_HEIGHT * 0.5f + 0.3f, bridgeLayer))
+        if (Physics.Raycast(playerTransform.position, Vector3.down, out RaycastHit slopeHit, Mathf.Abs(PLAYER_HEIGHT * 0.5f + 0.3f), bridgeLayer))
         {
             float angle = 90f - Vector3.Angle(playerTransform.forward, slopeHit.normal);
 

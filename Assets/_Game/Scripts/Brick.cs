@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HuySpace;
+using static UnityEditor.PlayerSettings;
 
 public class Brick : GameUnit
 {
@@ -21,20 +22,14 @@ public class Brick : GameUnit
                 character.AddBrick();
                 Invoke(nameof(Respawn), 3f);
 
-                Platform.instance.bricks.Remove(this);
-
-                meshRenderer.enabled = false;
-                collide.enabled = false;
+                SimplePool.Despawn(this);
             }
         }
     }
 
     private void Respawn()
     {
-        Platform.instance.bricks.Add(this);
-
-        meshRenderer.enabled = true;
-        collide.enabled = true;
+        SimplePool.Spawn<Brick>(colorType, transform.position, Quaternion.identity);
     }
 
     public void ChangeColor(ColorType color)
