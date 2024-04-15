@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour
         CloseAll();
         loadingUI.Open();
         yield return new WaitForSeconds(5f);
-        loadingUI.Close();
+        OpenMainMenu();
     }
 
     private void CloseAll()
