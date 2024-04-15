@@ -23,7 +23,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Loading());
-        OpenMainMenu();
     }
 
     public void OpenMainMenu()
