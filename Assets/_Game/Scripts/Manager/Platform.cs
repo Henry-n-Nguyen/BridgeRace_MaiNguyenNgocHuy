@@ -46,11 +46,11 @@ public class Platform : MonoBehaviour
                 Brick brick = SimplePool.Spawn<Brick>((ColorType)randomNumber + 1, pos, Quaternion.identity);
                 brick.ChangeColor((ColorType)randomNumber + 1);
 
-                bricks.Add(brick);
-
                 amounts[randomNumber]--;
 
                 if (amounts[randomNumber] == 0) amounts.Remove(amounts[randomNumber]);
+
+                bricks.Add(brick);
             }
         }
     }
@@ -62,9 +62,9 @@ public class Platform : MonoBehaviour
             Vector3 newPos = offset * currentMap;
             Vector3 prevPos = offset * (currentMap - 1);
 
-            foreach (GameUnit unit in bricks)
+            foreach (GameUnit brick in bricks)
             {
-                if (unit.colorType == color) unit.transform.position += -prevPos + newPos;
+                if (brick.colorType == color) brick.transform.position += -prevPos + newPos;
             }
         }
     }

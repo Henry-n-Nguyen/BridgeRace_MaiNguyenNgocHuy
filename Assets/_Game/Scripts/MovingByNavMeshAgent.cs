@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using HuySpace;
 
 public class MovingByNavMeshAgent : Character
 {
@@ -66,8 +67,10 @@ public class MovingByNavMeshAgent : Character
         if (isEnterEntrance)
         {
             isDetected = false;
-            ChangeState(new PatrolState());
             FindBrick();
+            FindBrick();
+            FindBrick();
+            ChangeState(new PatrolState());
             entranceDetected = false;
             isEnterEntrance = false;
         }
@@ -98,7 +101,7 @@ public class MovingByNavMeshAgent : Character
     {
         bool detect = false;
 
-        List<GameUnit> bricks = Platform.instance.bricks;
+        List<GameUnit> bricks = SimplePool.poolInstance[color].actives;
 
         foreach (GameUnit unit in bricks)
         {
