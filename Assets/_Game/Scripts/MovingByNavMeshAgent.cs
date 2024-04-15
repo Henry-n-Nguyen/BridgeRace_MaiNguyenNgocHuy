@@ -127,11 +127,24 @@ public class MovingByNavMeshAgent : Character
         {
             Collider[] objectInRange = Physics.OverlapSphere(playerTransform.position, 200f, entranceLayer);
 
+            List<Collider> entrances = new List<Collider>();
+
             if (objectInRange.Length > 0)
             {
-                entrancePoint = objectInRange[Random.Range(0, objectInRange.Length)].transform.position;
-                detect = true;
-                entranceDetected = true;
+                foreach (Collider collider in objectInRange)
+                {
+                    if (CheckTag(currentMap, collider))
+                    {
+                        entrances.Add(collider);
+                    }
+                }
+
+                if (entrances.Count > 0)
+                {
+                    entrancePoint = entrances[Random.Range(0, entrances.Count)].transform.position;
+                    detect = true;
+                    entranceDetected = true;
+                }
             }
         }
         else
