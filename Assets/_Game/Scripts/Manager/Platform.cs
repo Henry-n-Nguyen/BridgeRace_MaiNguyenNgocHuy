@@ -1,6 +1,7 @@
 using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -54,11 +55,17 @@ public class Platform : MonoBehaviour
         }
     }
 
-    public void SpawnBrickByColor(ColorType color)
+    public void SpawnBrickByColor(ColorType color, int currentMap)
     {
-        foreach (GameUnit unit in bricks)
+        if (currentMap > 1)
         {
-            if (unit.colorType == color) unit.transform.position += offset;
+            Vector3 newPos = offset * currentMap;
+            Vector3 prevPos = offset * (currentMap - 1);
+
+            foreach (GameUnit unit in bricks)
+            {
+                if (unit.colorType == color) unit.transform.position += -prevPos + newPos;
+            }
         }
     }
 
@@ -104,6 +111,7 @@ public class Platform : MonoBehaviour
         {
             characters[i].OnInit();
             characters[i].WarpTo(spawnPoint[i].position);
+            SpawnBrickByColor(characters[i].color, characters[i].currentMap);
         };
 
         CameraFollow.instance.target = characters[(int) ColorType.Blue - 1].gameObject.transform;

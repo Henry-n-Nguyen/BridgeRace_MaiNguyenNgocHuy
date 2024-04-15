@@ -7,6 +7,9 @@ public class InGame : UICanvas
     public void PauseGame()
     {
         GameplayManager.instance.PauseGame();
-        UIManager.instance.Pause();
+
+        Close(0);
+        UIManager.instance.CloseDirectly<DynamicJoyStick>();
+        UIManager.instance.OpenUI<Pause>();
     }
 }

@@ -24,6 +24,8 @@ public class WinPos : MonoBehaviour
 
         Character no1 = other.GetComponent<Character>();
 
+        if (no1.color == ColorType.Blue) LevelManager.instance.isWinLevel = true;
+
         SetUpPodium(no1, 1);
 
         int rank = 2;
