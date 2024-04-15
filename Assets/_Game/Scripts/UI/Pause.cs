@@ -7,20 +7,28 @@ public class Pause : UICanvas
     public void Resume()
     {
         GameplayManager.instance.ResumeGame();
-        UIManager.instance.InGame();
+
+        Close(0);
+        UIManager.instance.OpenUI<DynamicJoyStick>();
+        UIManager.instance.OpenUI<InGame>();
     }
 
     public void Restart()
     {
         GameplayManager.instance.ResumeGame();
         GameplayManager.instance.RestartGame();
-        UIManager.instance.InGame();
+
+        Close(0);
+        UIManager.instance.OpenUI<DynamicJoyStick>();
+        UIManager.instance.OpenUI<InGame>();
     }
 
     public void MainMenu()
     {
-        GameplayManager.instance.ResumeGame();
         GameplayManager.instance.RestartGame();
-        UIManager.instance.OpenMainMenu();
+        GameplayManager.instance.OnHold();
+
+        Close(0);
+        UIManager.instance.OpenUI<MainMenu>();
     }
 }

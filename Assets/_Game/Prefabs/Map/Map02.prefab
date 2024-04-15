@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Map02
       objectReference: {fileID: 0}
+    - target: {fileID: 8766178966462725968, guid: 419d4d39a2aaf0343aa81454c254e074, type: 3}
+      propertyPath: mapHolderId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419d4d39a2aaf0343aa81454c254e074, type: 3}
 --- !u!4 &5953271848252611085 stripped
@@ -726,6 +730,10 @@ PrefabInstance:
     - target: {fileID: 6846825377118718747, guid: 419d4d39a2aaf0343aa81454c254e074, type: 3}
       propertyPath: m_TagString
       value: Map02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766178966462725968, guid: 419d4d39a2aaf0343aa81454c254e074, type: 3}
+      propertyPath: mapHolderId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419d4d39a2aaf0343aa81454c254e074, type: 3}

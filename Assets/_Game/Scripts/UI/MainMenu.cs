@@ -7,6 +7,9 @@ public class MainMenu : UICanvas
     public void TapToStart()
     {
         GameplayManager.instance.StartGame();
-        UIManager.instance.InGame();
+
+        Close(0);
+        UIManager.instance.OpenUI<DynamicJoyStick>();
+        UIManager.instance.OpenUI<InGame>();
     }
 }

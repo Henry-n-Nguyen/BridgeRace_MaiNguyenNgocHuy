@@ -13,26 +13,34 @@ public class Step : GameUnit
     private void OnCollisionEnter(Collision collision)
     {
         Character character = collision.gameObject.GetComponent<Character>();
-        if (!character.IsRanOutOfBrick() && !character.OnDownStair())
+        if (!character.IsRanOutOfBrick())
         {
             Physics.IgnoreCollision(stepCollider, collision.collider, true);
 
-            if (meshRenderer.enabled == false)
+            if (!character.OnDownStair())
             {
-                meshRenderer.enabled = true;
-                character.RemoveBrick();
-                ChangeColor(character.color);
-            }
-            else if (character.color != colorType)
-            {
-                character.RemoveBrick();
-                ChangeColor(character.color);
+                if (meshRenderer.enabled == false)
+                {
+                    meshRenderer.enabled = true;
+                    character.RemoveBrick();
+                    ChangeColor(character.color);
+                }
+                else if (character.color != colorType)
+                {
+                    character.RemoveBrick();
+                    ChangeColor(character.color);
+                }
             }
         }
         else
         {
             Physics.IgnoreCollision(stepCollider, collision.collider, false);
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Physics.IgnoreCollision(stepCollider, collision.collider, false);
     }
 
     public void ChangeColor(ColorType color)

@@ -6,74 +6,94 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField] UICanvas inGameUI;
-    [SerializeField] UICanvas joyStickUI;
+    Dictionary<System.Type, UICanvas> activatedCanvases = new Dictionary<System.Type, UICanvas>();
+    Dictionary<System.Type, UICanvas> canvasPrefabs = new Dictionary<System.Type, UICanvas>();
 
-    [SerializeField] UICanvas mainMenuUI;
-    [SerializeField] UICanvas winUI;
-    [SerializeField] UICanvas loseUI;
-    [SerializeField] UICanvas pauseUI;
-    [SerializeField] UICanvas loadingUI;
+    [SerializeField] Transform holder;
+
+    [SerializeField] UICanvas[] canvases;
 
     private void Awake()
     {
         instance = this;
+
+        // Load UI canvas
+        for (int i = 0; i < canvases.Length; i++)
+        {
+            canvasPrefabs.Add(canvases[i].GetType(), canvases[i]);
+        }
     }
 
-    private void Start()
+    // Open Canvas
+    public T OpenUI<T>() where T : UICanvas
     {
-        StartCoroutine(Loading());
-        OpenMainMenu();
-    }
+        T canvas = GetUI<T>();
 
-    public void OpenMainMenu()
-    {
-        CloseAll();
-        mainMenuUI.Open();
-        GameplayManager.instance.PauseGame();
-    }
+        canvas.Setup();
+        canvas.Open();
 
-    public void InGame()
-    {
-        CloseAll();
-        inGameUI.Open();
-        joyStickUI.Open();
-    }
-
-    public void Win()
-    {
-        CloseAll();
-        winUI.Open();
+        return canvas as T;
     }
     
-    public void Lose()
+    // Close Canvas after time
+    public void CloseUI<T>(float time) where T : UICanvas
     {
-        CloseAll();
-        loseUI.Open();
+        if (IsUILoaded<T>())
+        {
+            activatedCanvases[typeof(T)].Close(time);
+        }
     }
 
-    public void Pause()
+    // Close Canvas directly
+    public void CloseDirectly<T>() where T : UICanvas
     {
-        CloseAll();
-        pauseUI.Open();
+        if (IsUILoaded<T>())
+        {
+            activatedCanvases[typeof(T)].CloseDirectly();
+        }
     }
 
-    public IEnumerator Loading()
+    // Check Canvas have been created or not
+    public bool IsUILoaded<T>() where T : UICanvas
     {
-        CloseAll();
-        loadingUI.Open();
-        yield return new WaitForSeconds(5f);
-        loadingUI.Close();
+        return activatedCanvases.ContainsKey(typeof(T)) && activatedCanvases[typeof(T)] != null;
     }
 
+    // Check Canvas have been activated or not
+    public bool IsUIOpened<T>() where T : UICanvas
+    {
+        return IsUILoaded<T>() && activatedCanvases[typeof(T)].gameObject.activeSelf;
+    }
+
+    // Get Activated Canvas
+    public T GetUI<T>() where T : UICanvas
+    {
+        if (!IsUILoaded<T>())
+        {
+            T prefab = GetUIPrefab<T>();
+            T canvas = Instantiate(prefab, holder);
+            activatedCanvases[typeof(T)] = canvas;
+        }
+
+        return activatedCanvases[typeof(T)] as T;
+    }
+
+    public T GetUIPrefab<T>() where T : UICanvas
+    {
+        return canvasPrefabs[typeof(T)] as T;
+    }
+
+    // Close all canvas
     private void CloseAll()
     {
-        mainMenuUI.Close();
-        winUI.Close();
-        loseUI.Close();
-        pauseUI.Close();
-        inGameUI.Close();
-        joyStickUI.Close();
-        loadingUI.Close();
+        foreach (var canvas in activatedCanvases)
+        {
+            var value = canvas.Value;
+
+            if (value != null && value.gameObject.activeSelf)
+            {
+                value.CloseDirectly();
+            }
+        }
     }
 }

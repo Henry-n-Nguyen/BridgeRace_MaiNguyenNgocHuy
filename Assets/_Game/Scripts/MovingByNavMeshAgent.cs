@@ -6,7 +6,6 @@ public class MovingByNavMeshAgent : Character
 {
     [SerializeField] private Vector3 desPoint;
 
-    [SerializeField] private Vector3 endPoint;
     [SerializeField] private Vector3 entrancePoint;
 
     [SerializeField] private LayerMask brickLayer;
@@ -67,9 +66,8 @@ public class MovingByNavMeshAgent : Character
         if (isEnterEntrance)
         {
             isDetected = false;
-            currentMap++;
-            FindBrick();
             ChangeState(new PatrolState());
+            FindBrick();
             entranceDetected = false;
             isEnterEntrance = false;
         }
@@ -100,7 +98,9 @@ public class MovingByNavMeshAgent : Character
     {
         bool detect = false;
 
-        foreach (GameUnit unit in Platform.instance.bricks)
+        List<GameUnit> bricks = Platform.instance.bricks;
+
+        foreach (GameUnit unit in bricks)
         {
             if (unit.colorType == color)
             {

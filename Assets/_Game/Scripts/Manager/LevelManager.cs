@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
+    public bool isWinLevel;
+
     private void Awake()
     {
         instance = this;
@@ -29,7 +31,8 @@ public class LevelManager : MonoBehaviour
     public IEnumerator EndLevel()
     {
         yield return new WaitForSeconds(3f);
-        UIManager.instance.Win();
+        if (isWinLevel) UIManager.instance.OpenUI<Win>();
+        else UIManager.instance.OpenUI<Lose>();
     }
 
     public void ResetLevel()

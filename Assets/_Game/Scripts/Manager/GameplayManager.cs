@@ -22,6 +22,8 @@ public class GameplayManager : MonoBehaviour
     public void OnInit()
     {
         levelManager.gameObject.SetActive(true);
+        UIManager.instance.OpenUI<MainMenu>();
+        UIManager.instance.OpenUI<LoadingUI>();
     }
 
     public void OnHold()
