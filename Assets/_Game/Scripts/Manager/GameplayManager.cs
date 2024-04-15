@@ -16,6 +16,7 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         OnInit();
+        OnHold();
     }
 
     public void OnInit()
@@ -23,8 +24,14 @@ public class GameplayManager : MonoBehaviour
         levelManager.gameObject.SetActive(true);
     }
 
+    public void OnHold()
+    {
+        Platform.instance.DeactiveCharacter();
+    }
+
     public void StartGame()
     {
+        ResumeGame();
         StartCoroutine(ActiveCharacter());
     }
 

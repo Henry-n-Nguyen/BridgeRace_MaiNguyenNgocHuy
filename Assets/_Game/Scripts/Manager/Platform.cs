@@ -2,6 +2,7 @@ using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Platform : MonoBehaviour
 {
@@ -89,13 +90,23 @@ public class Platform : MonoBehaviour
         }
     }
 
+    public void DeactiveCharacter()
+    {
+        foreach (Character character in characters)
+        {
+            character.isMoving = false;
+        }
+    }
+
     public void ResetPlatform()
     {
         for (int i = 0; i < characters.Count; i++)
         {
             characters[i].OnInit();
-            characters[i].transform.position = spawnPoint[i].position;
+            characters[i].WarpTo(spawnPoint[i].position);
         };
+
+        CameraFollow.instance.target = characters[(int) ColorType.Blue - 1].gameObject.transform;
     }
 
     public List<Character> GetListOfCharacters()

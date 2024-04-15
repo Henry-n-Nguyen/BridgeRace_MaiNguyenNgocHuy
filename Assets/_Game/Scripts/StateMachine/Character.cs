@@ -170,6 +170,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void ClearBrick()
     {
+        foreach (Brick brick in bricks) Destroy(brick.gameObject);
         bricks.Clear();
     }
 

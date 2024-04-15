@@ -10,7 +10,6 @@ public class WinPos : MonoBehaviour
 
     [SerializeField] ColorData colorData;
 
-
     private List<Character> characters = new List<Character>();
 
     private void Start()
@@ -34,12 +33,17 @@ public class WinPos : MonoBehaviour
             if (character.color != no1.color && rank <= 3)
             {
                 SetUpPodium(character, rank);
+                rank++;
             }
         }
+
+        StartCoroutine(LevelManager.instance.EndLevel());
     }
 
     private void SetUpPodium(Character character, int rank)
     {
+        character.ClearBrick();
+
         character.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         podiumMeshRenderer[rank-1].material = colorData.GetMat(character.color);

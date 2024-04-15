@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] UICanvas winUI;
     [SerializeField] UICanvas loseUI;
     [SerializeField] UICanvas pauseUI;
+    [SerializeField] UICanvas loadingUI;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(Loading());
         OpenMainMenu();
     }
 
@@ -28,6 +30,7 @@ public class UIManager : MonoBehaviour
     {
         CloseAll();
         mainMenuUI.Open();
+        GameplayManager.instance.PauseGame();
     }
 
     public void InGame()
@@ -55,6 +58,14 @@ public class UIManager : MonoBehaviour
         pauseUI.Open();
     }
 
+    public IEnumerator Loading()
+    {
+        CloseAll();
+        loadingUI.Open();
+        yield return new WaitForSeconds(5f);
+        loadingUI.Close();
+    }
+
     private void CloseAll()
     {
         mainMenuUI.Close();
@@ -63,5 +74,6 @@ public class UIManager : MonoBehaviour
         pauseUI.Close();
         inGameUI.Close();
         joyStickUI.Close();
+        loadingUI.Close();
     }
 }

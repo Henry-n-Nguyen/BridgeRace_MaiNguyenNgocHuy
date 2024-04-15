@@ -18,12 +18,5 @@ public class Entrance : MonoBehaviour
         Platform.instance.SpawnBrickByColor(character.color);
 
         character.WarpTo(transform.position + Vector3.forward * 1f);
-
-        collide.enabled = false;
     }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    navMeshStacle.enabled = true;
-    //}
 }

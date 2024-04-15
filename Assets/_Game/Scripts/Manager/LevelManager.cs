@@ -8,10 +8,6 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    [SerializeField] bool isReset;
-    [SerializeField] bool isNextLevel;
-    [SerializeField] bool isActive;
-
     private void Awake()
     {
         instance = this;
@@ -21,27 +17,6 @@ public class LevelManager : MonoBehaviour
     void OnEnable()
     {
         OnEnter();
-    }
-
-    private void Update()
-    {
-        if (isReset)
-        {
-            ResetLevel();
-            isReset = false;
-        }
-
-        if (isNextLevel)
-        {
-            NextLevel();
-            isReset = false;
-        }
-
-        if (isActive)
-        {
-            Platform.instance.ActiveCharacter();
-            isActive = false;
-        }
     }
 
     public void OnEnter()
