@@ -1,6 +1,4 @@
 using HuySpace;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,14 +9,21 @@ public class Entrance : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        navMeshStacle.enabled = false;
-    }
+        //navMeshStacle.enabled = true;
 
-    private void OnTriggerExit(Collider other)
-    {
         Character character = other.GetComponent<Character>();
 
-        navMeshStacle.enabled = true;
-        character.currentMap++;
+        character.isEnterEntrance = true;
+
+        Platform.instance.SpawnBrickByColor(character.color);
+
+        character.WarpTo(transform.position + Vector3.forward * 1f);
+
+        collide.enabled = false;
     }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    navMeshStacle.enabled = true;
+    //}
 }

@@ -9,14 +9,13 @@ public class Step : GameUnit
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
     [SerializeField] Collider stepCollider;
-    [SerializeField] NavMeshObstacle navMeshStacle;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Character character = other.GetComponent<Character>();
-        if (!character.IsRanOutOfBrick() || character.OnDownStair() || character.color == colorType)
+        Character character = collision.gameObject.GetComponent<Character>();
+        if (!character.IsRanOutOfBrick() && !character.OnDownStair())
         {
-            navMeshStacle.enabled = false;
+            Physics.IgnoreCollision(stepCollider, collision.collider, true);
 
             if (meshRenderer.enabled == false)
             {
@@ -32,7 +31,7 @@ public class Step : GameUnit
         }
         else
         {
-            navMeshStacle.enabled = true;
+            Physics.IgnoreCollision(stepCollider, collision.collider, false);
         }
     }
 

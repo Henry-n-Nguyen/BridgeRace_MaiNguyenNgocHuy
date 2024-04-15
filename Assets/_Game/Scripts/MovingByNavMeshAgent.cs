@@ -1,29 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MovingByNavMeshAgent : Character
 {
-    [SerializeField] private NavMeshAgent agent;
-
-    [SerializeField] private bool isDetected;
-
     [SerializeField] private Vector3 desPoint;
 
+    [SerializeField] private Vector3 endPoint;
     [SerializeField] private Vector3 entrancePoint;
 
     [SerializeField] private LayerMask brickLayer;
     [SerializeField] private LayerMask stepLayer;
     [SerializeField] private LayerMask entranceLayer;
 
+    private bool isDetected;
+    private bool entranceDetected;
+    
     private NavMeshPath path;
-
-    public override void OnInit()
-    {
-        base.OnInit();
-
-        agent.speed = moveSpeed;
-        agent.updateRotation = true;
-    }
 
     public override void Moving()
     {
@@ -35,7 +28,7 @@ public class MovingByNavMeshAgent : Character
             ChangeState(new IdleState());
         }
 
-        if (bricks.Count >= 12)
+        if (bricks.Count >= 20)
         {
             isDetected = false;
             ChangeState(new BuildState());
@@ -69,6 +62,16 @@ public class MovingByNavMeshAgent : Character
         {
             isDetected = false;
             ChangeState(new IdleState());
+        }
+
+        if (isEnterEntrance)
+        {
+            isDetected = false;
+            currentMap++;
+            FindBrick();
+            ChangeState(new PatrolState());
+            entranceDetected = false;
+            isEnterEntrance = false;
         }
 
         if (IsRanOutOfBrick())
@@ -117,16 +120,20 @@ public class MovingByNavMeshAgent : Character
     {
         bool detect = false;
 
-        Collider[] objectInRange = Physics.OverlapSphere(playerTransform.position, 200f, entranceLayer);
-
-        foreach (Collider collider in objectInRange)
+        if (!entranceDetected)
         {
-            if (CheckTag(currentMap, collider))
+            Collider[] objectInRange = Physics.OverlapSphere(playerTransform.position, 200f, entranceLayer);
+
+            if (objectInRange.Length > 0)
             {
-                entrancePoint = collider.transform.position + Vector3.forward * 2;
+                entrancePoint = objectInRange[Random.Range(0, objectInRange.Length)].transform.position;
                 detect = true;
-                break;
+                entranceDetected = true;
             }
+        }
+        else
+        {
+            detect = true;
         }
 
         if (!detect)

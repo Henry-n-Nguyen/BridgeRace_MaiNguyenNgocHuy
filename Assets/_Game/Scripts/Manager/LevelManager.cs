@@ -51,10 +51,17 @@ public class LevelManager : MonoBehaviour
         Platform.instance.SpawnBrick();
     }
 
+    public IEnumerator EndLevel()
+    {
+        yield return new WaitForSeconds(3f);
+        UIManager.instance.Win();
+    }
+
     public void ResetLevel()
     {
         MapManager.instance.ResetMap();
         Platform.instance.ResetPlatform();
+        CameraFollow.instance.OnInit();
     }
 
     public void NextLevel()

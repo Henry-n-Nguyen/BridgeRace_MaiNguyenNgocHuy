@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using HuySpace;
 using System.Drawing;
+using UnityEngine.AI;
 
 public abstract class Character : MonoBehaviour
 {
     protected const string TRIGGER_RUN = "run";
     protected const string TRIGGER_IDLE = "idle";
+    protected const string TRIGGER_NO_1 = "win1";
+    protected const string TRIGGER_WIN = "win2";
     protected const string TAG_BRICK = "Brick";
     protected const string TAG_ENTRANCE = "Entrance";
 
@@ -21,6 +24,7 @@ public abstract class Character : MonoBehaviour
     // Editor
     [SerializeField] protected Transform playerTransform;
     [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private Animator anim;
     [SerializeField] private Transform playerBrickHolder;
     [SerializeField] private LayerMask bridgeLayer;
@@ -28,15 +32,18 @@ public abstract class Character : MonoBehaviour
     [SerializeField] private Brick brickPrefab;
 
     public bool isMoving;
+    public bool isEnterEntrance;
 
     [SerializeField] ColorData colorData;
     [SerializeField] Renderer meshRenderer;
+    
+    public int rank;
 
     public ColorType color;
 
     public bool isGrounded;
 
-    protected float moveSpeed = 5f;
+    protected float moveSpeed = 8f;
 
     public int currentMap = 1;
 
@@ -60,6 +67,15 @@ public abstract class Character : MonoBehaviour
         {
             currentState.OnExecute(this);
         }
+
+        if (!isMoving)
+        {
+            rb.isKinematic = true;
+        }
+        else
+        {
+            rb.isKinematic= false;
+        }
     }
 
     public bool IsRanOutOfBrick()
@@ -70,6 +86,8 @@ public abstract class Character : MonoBehaviour
     public virtual void OnInit()
     {
         bricks.Clear();
+
+        agent.speed = moveSpeed;
 
         ChangeState(new IdleState());
     }
@@ -114,6 +132,12 @@ public abstract class Character : MonoBehaviour
         ChangeAnim(TRIGGER_RUN);
     }
 
+    public virtual void EndLevel()
+    {
+        if (rank == 1) ChangeAnim(TRIGGER_NO_1);
+        else ChangeAnim(TRIGGER_WIN);
+    }
+
     public virtual bool OnDownStair()
     {
         if (Physics.Raycast(playerTransform.position, Vector3.down, out RaycastHit slopeHit, PLAYER_HEIGHT * 0.5f + 0.3f, bridgeLayer))
@@ -124,7 +148,7 @@ public abstract class Character : MonoBehaviour
         }
 
         return false;
-    } 
+    }
 
     public virtual void AddBrick()
     {
@@ -153,5 +177,10 @@ public abstract class Character : MonoBehaviour
     {
         color = colorType;
         meshRenderer.material = colorData.GetMat(colorType);
+    }
+
+    public void WarpTo(Vector3 pos)
+    {
+        agent.Warp(pos);
     }
 }

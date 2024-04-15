@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8437835115307463338}
   - component: {fileID: 2499845139686678813}
   - component: {fileID: 4312024760938331221}
-  - component: {fileID: 8739195482112928398}
   m_Layer: 8
   m_Name: Step
   m_TagString: Untagged
@@ -95,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799081857217913696}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.5}
@@ -132,20 +131,3 @@ MonoBehaviour:
   colorData: {fileID: 11400000, guid: 2931db34a732f924fae2282a17338222, type: 2}
   meshRenderer: {fileID: 1722783259612767561}
   stepCollider: {fileID: 8437835115307463338}
-  navMeshStacle: {fileID: 8739195482112928398}
---- !u!208 &8739195482112928398
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799081857217913696}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.4, y: 0.5, z: 0.75}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5

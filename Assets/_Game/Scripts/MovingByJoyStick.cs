@@ -31,6 +31,8 @@ public class MovingByJoyStick : Character
     {
         base.Moving();
 
+        isMoving = true;
+
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
 
         Direct direction = CheckDirection(inputVector);
@@ -45,6 +47,8 @@ public class MovingByJoyStick : Character
     public override void StopMoving()
     {
         base.StopMoving();
+
+        isMoving = false;
 
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
         if (Vector2.Distance(inputVector, Vector2.zero) > 0.1f) ChangeState(new PatrolState());

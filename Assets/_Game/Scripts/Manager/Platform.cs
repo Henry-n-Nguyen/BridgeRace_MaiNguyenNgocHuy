@@ -97,4 +97,9 @@ public class Platform : MonoBehaviour
             characters[i].transform.position = spawnPoint[i].position;
         };
     }
+
+    public List<Character> GetListOfCharacters()
+    {
+        return characters;
+    }
 }

@@ -8,16 +8,29 @@ public class CameraFollow : MonoBehaviour
 
     public Transform target;
     
-    [SerializeField] private Vector3 offset;
+    public Vector3 offset;
 
     private void Awake()
     {
         instance = this;
+        
+        OnInit();
     }
 
-    // Update is called once per frame
     void LateUpdate()
     {
         transform.position = target.position + offset;
+    }
+
+    public void OnInit()
+    {
+        offset = Vector3.up * 15 + Vector3.back * 15;
+        transform.rotation = Quaternion.Euler(Vector3.right * 45);
+    }
+
+    public void EndLevel()
+    {
+        offset = Vector3.up * 5 + Vector3.forward * 18;
+        transform.rotation = Quaternion.Euler(Vector3.up * 180);
     }
 }
