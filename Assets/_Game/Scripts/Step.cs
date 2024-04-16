@@ -13,11 +13,11 @@ public class Step : GameUnit
     private void OnCollisionEnter(Collision collision)
     {
         Character character = collision.gameObject.GetComponent<Character>();
-        if (!character.IsRanOutOfBrick())
+        if (!character.IsRanOutOfBrick() || character.color == colorType || character.OnDownStair())
         {
             Physics.IgnoreCollision(stepCollider, collision.collider, true);
 
-            if (!character.OnDownStair())
+            if (character.color != colorType)
             {
                 if (meshRenderer.enabled == false)
                 {
