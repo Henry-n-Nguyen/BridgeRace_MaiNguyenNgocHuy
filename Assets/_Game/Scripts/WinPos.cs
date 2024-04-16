@@ -46,11 +46,10 @@ public class WinPos : MonoBehaviour
     {
         character.ClearBrick();
 
-        character.transform.rotation = Quaternion.Euler(Vector3.zero);
-
         podiumMeshRenderer[rank-1].material = colorData.GetMat(character.color);
 
         character.WarpTo(podiumPoint[rank-1].transform.position);
+        character.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         character.rank = rank;
 
