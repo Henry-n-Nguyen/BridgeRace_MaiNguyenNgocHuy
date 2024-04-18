@@ -66,6 +66,22 @@ public class Platform : MonoBehaviour
             {
                 if (brick.colorType == color) brick.transform.position += -prevPos + newPos;
             }
+        } else
+        {
+            foreach (GameUnit brick in bricks)
+            {
+                if (brick.colorType == color)
+                {
+                    Vector3 pos = brick.transform.position;
+
+                    while (pos.y - 0.6f > 0.01f)
+                    {
+                        pos -= offset;
+                    }
+
+                    brick.transform.position = pos;
+                }
+            }
         }
     }
 
@@ -111,6 +127,7 @@ public class Platform : MonoBehaviour
         {
             characters[i].OnInit();
             characters[i].WarpTo(spawnPoint[i].position);
+
             SpawnBrickByColor(characters[i].color, characters[i].currentMap);
         };
 

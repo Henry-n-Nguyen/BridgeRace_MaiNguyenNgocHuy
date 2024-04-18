@@ -85,9 +85,11 @@ public abstract class Character : MonoBehaviour
 
     public virtual void OnInit()
     {
-        bricks.Clear();
+        ClearBrick();
 
         agent.speed = moveSpeed;
+
+        currentMap = 1;
 
         ChangeState(new IdleState());
     }

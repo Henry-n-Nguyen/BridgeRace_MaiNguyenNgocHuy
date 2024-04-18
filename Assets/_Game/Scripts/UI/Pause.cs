@@ -16,7 +16,7 @@ public class Pause : UICanvas
     public void Restart()
     {
         GameplayManager.instance.ResumeGame();
-        GameplayManager.instance.RestartGame();
+        LevelManager.instance.ResetLevel();
 
         Close(0);
         UIManager.instance.OpenUI<DynamicJoyStick>();
@@ -25,7 +25,7 @@ public class Pause : UICanvas
 
     public void MainMenu()
     {
-        GameplayManager.instance.RestartGame();
+        LevelManager.instance.ResetLevel();
         GameplayManager.instance.OnHold();
 
         Close(0);

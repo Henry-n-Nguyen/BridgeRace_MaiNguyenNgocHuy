@@ -1,4 +1,5 @@
 using HuySpace;
+using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private Transform mapHolder;
     [SerializeField] private GameObject[] mapPrefabs;
 
-    private List<GameObject> createdMap = new List<GameObject> ();
+    private List<GameObject> createdMap = new List<GameObject>();
 
     void Awake()
     {
