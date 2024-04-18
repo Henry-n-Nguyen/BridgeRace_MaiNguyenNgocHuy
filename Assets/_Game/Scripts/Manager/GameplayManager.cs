@@ -19,6 +19,12 @@ public class GameplayManager : MonoBehaviour
         OnHold();
     }
 
+    private IEnumerator ActiveCharacter()
+    {
+        yield return new WaitForSeconds(1f);
+        Platform.instance.ActiveCharacter();
+    }
+
     public void OnInit()
     {
         levelManager.gameObject.SetActive(true);
@@ -35,12 +41,6 @@ public class GameplayManager : MonoBehaviour
     {
         ResumeGame();
         StartCoroutine(ActiveCharacter());
-    }
-
-    private IEnumerator ActiveCharacter()
-    {
-        yield return new WaitForSeconds(1f);
-        Platform.instance.ActiveCharacter();
     }
 
     public void PauseGame()
