@@ -17,7 +17,7 @@ public class Step : GameUnit
         {
             Physics.IgnoreCollision(stepCollider, collision.collider, true);
 
-            if (character.color != colorType)
+            if (character.color != colorType && !character.OnDownStair())
             {
                 if (meshRenderer.enabled == false)
                 {

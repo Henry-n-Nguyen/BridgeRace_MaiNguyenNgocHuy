@@ -9,10 +9,20 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance;
 
     public bool isWinLevel;
+    public bool isResetLevel;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        if (isResetLevel)
+        {
+            ResetLevel();
+            isResetLevel = false;
+        }
     }
 
     // Start is called before the first frame update

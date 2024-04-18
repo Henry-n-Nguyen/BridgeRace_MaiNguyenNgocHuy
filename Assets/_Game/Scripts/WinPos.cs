@@ -1,10 +1,12 @@
 using HuySpace;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class WinPos : MonoBehaviour
 {
+    [SerializeField] private Transform winPosTransform;
     [SerializeField] private Transform[] podiumPoint;
     [SerializeField] private MeshRenderer[] podiumMeshRenderer;
 
@@ -48,11 +50,11 @@ public class WinPos : MonoBehaviour
 
         podiumMeshRenderer[rank-1].material = colorData.GetMat(character.color);
 
-        character.WarpTo(podiumPoint[rank-1].transform.position);
+        character.WarpTo(podiumPoint[rank - 1].transform.position);
         character.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         character.rank = rank;
 
         character.ChangeState(new WinState());
-    } 
+    }
 }

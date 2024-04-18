@@ -52,9 +52,4 @@ public class GameplayManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
     }
-
-    public void RestartGame()
-    {
-        LevelManager.instance.ResetLevel();
-    } 
 }

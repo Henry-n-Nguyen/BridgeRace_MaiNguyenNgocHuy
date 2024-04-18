@@ -6,7 +6,7 @@ public class Lose : UICanvas
 {
     public void RestartLevel()
     {
-        GameplayManager.instance.RestartGame();
+        LevelManager.instance.ResetLevel();
 
         Close(0);
         UIManager.instance.OpenUI<DynamicJoyStick>();

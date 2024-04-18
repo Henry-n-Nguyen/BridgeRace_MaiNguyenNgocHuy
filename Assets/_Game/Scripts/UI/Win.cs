@@ -6,7 +6,7 @@ public class Win : UICanvas
 {
     public void NextLevel()
     {
-        GameplayManager.instance.RestartGame();
+        LevelManager.instance.ResetLevel();
 
         Close(0);
         UIManager.instance.OpenUI<DynamicJoyStick>();
