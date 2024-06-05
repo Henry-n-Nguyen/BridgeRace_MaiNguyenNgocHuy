@@ -154,13 +154,13 @@ public abstract class Character : MonoBehaviour
 
     public virtual void AddBrick()
     {
-        Vector3 pos = playerBrickHolder.position + Vector3.up * BRICK_HEIGHT * bricks.Count;
+        Vector3 pos = Vector3.up * BRICK_HEIGHT * bricks.Count;
 
-        Vector3 direction = transform.rotation.eulerAngles + Vector3.up * 90f;
-
-        Brick createdObj = Instantiate(brickPrefab, pos, Quaternion.Euler(direction), playerBrickHolder);
+        Brick createdObj = Instantiate(brickPrefab, playerBrickHolder);
 
         createdObj.ChangeColor(color);
+
+        createdObj.brickTransform.localPosition = pos;
 
         bricks.Push(createdObj);
     }
