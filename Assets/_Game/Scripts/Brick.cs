@@ -12,6 +12,8 @@ public class Brick : GameUnit
     [SerializeField] Renderer meshRenderer;
     [SerializeField] Collider collide;
 
+    public Transform brickTransform;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer(LAYER_PLAYER))
